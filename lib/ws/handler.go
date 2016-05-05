@@ -1,10 +1,14 @@
 package ws
 
 import (
-	"github.com/gorilla/websocket"
 	"fmt"
+	"github.com/gorilla/websocket"
+	h "k8-rolling-demo/lib/http"
 	"net/http"
+	"time"
 )
+
+const serviceName string = "chefkoch-demo-np"
 
 func WsHandler(w http.ResponseWriter, r *http.Request) {
 	wsupgrader := websocket.Upgrader{
@@ -18,12 +22,23 @@ func WsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	for {
-		t, msg, err := conn.ReadMessage()
-		if err != nil {
-			break
-		}
-
-		conn.WriteMessage(t, msg)
+	_, _, err = conn.ReadMessage()
+	if err != nil {
+		fmt.Println("Failed while reading message: %+v", err)
+		conn.Close()
 	}
+
+	client := h.DefaultHttpClient()
+	ticker := time.NewTicker(time.Second)
+	go func() {
+		for _ = range ticker.C {
+			svc, err := client.FetchServiceDetails(serviceName)
+			if err != nil {
+				fmt.Println("Failed while fetching service details: %+v", err)
+				continue
+			}
+
+			conn.WriteJSON(svc)
+		}
+	}()
 }
