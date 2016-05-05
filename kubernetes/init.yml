@@ -14,6 +14,7 @@ items:
     template:
       metadata:
         labels:
+          app: demo
           component: web
           name: chefkoch-demo
           release: v1
@@ -42,5 +43,5 @@ items:
       nodePort: 80
       protocol: TCP
     selector:
+      app: demo
       component: web
-      name: chefkoch-demo

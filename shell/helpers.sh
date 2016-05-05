@@ -60,3 +60,15 @@ function kubernetes-delete-namespace {
         sleep 1
     done
 }
+
+function kubernetes-info {
+    echo ""
+    echo ">> RUNNING!"
+    echo ">>"
+    echo ">> kubectl get po --namespace=$1"
+    echo ">> kubectl get rc --namespace=$1"
+    echo ">> kubectl describe svc --namespace=$1"
+    echo ">>"
+    echo ">> CALL:"
+    echo ">> http://$2"
+}

@@ -6,13 +6,13 @@ metadata:
     name: chefkoch-demo-v2
     project: k8-rolling-demo
 spec:
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:
         app: demo
         component: web
-        name: chefkoch-demo
+        name: chefkoch-canary-demo
         release: v2
     spec:
       containers:

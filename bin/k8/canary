@@ -6,7 +6,6 @@ DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 
 # export common environment variables
 export NAMESPACE="k8-rolling-demo"
-export MAX_DURATION=${MAX_DURATION:-60}
 
 # export custom environment variables if available
 if [[ -f "${DIR}/../../.env" ]]; then
@@ -15,12 +14,13 @@ fi
 
 # main
 
-echo "[INFO] Creating namespace ${NAMESPACE}"
-kubernetes-delete-namespace ${NAMESPACE}
-kubernetes-create-namespace ${NAMESPACE}
+if ! $(kubernetes-has-namespace ${NAMESPACE}); then
+    echo "[ERROR] Namespace ${NAMESPACE} not found. Please run \"bin/k8/init\""
+    exit 1;
+fi
 
-echo "[INFO] Initial start"
-kubectl create --namespace=${NAMESPACE} -f ${DIR}/../../kubernetes/init.yml
+echo "[INFO] Deploying canary release"
+kubectl create --namespace=${NAMESPACE} -f ${DIR}/../../kubernetes/canary-demo-rc.yml
 
 ## wait for environment
 kubernetes-wait ${NAMESPACE} ${MAX_DURATION}
