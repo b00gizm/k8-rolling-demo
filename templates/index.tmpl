@@ -16,5 +16,20 @@
 
     <h2>Hello World</h2>
 
+    <script>
+
+        var url = 'ws://localhost:8080/ws/service';
+        var conn = new WebSocket(url);
+
+        conn.onopen = function() {
+            conn.send('ping');
+        };
+
+        conn.onmessage = function(msg) {
+            console.log(msg);
+        };
+
+    </script>
+
 </body>
 </html>
