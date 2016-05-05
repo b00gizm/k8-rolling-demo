@@ -18,6 +18,9 @@ func init() {
 		})
 	}
 
+	// static files
+	router.Static("/public", "./public")
+
 	// main html
 	router.LoadHTMLGlob("templates/*")
 	router.GET("/", func(c *gin.Context) {

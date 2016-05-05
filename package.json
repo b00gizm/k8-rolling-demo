@@ -1,0 +1,28 @@
+{
+  "name": "k8-rolling-demo",
+  "version": "1.0.0",
+  "description": "Companion demo for my talk at Bonn Agile goes Docker Cluster meetup in May 2016",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/.bin/webpack --progress --colors",
+    "watch": "./node_modules/.bin/webpack --progress --colors --watch --watch-polling"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b00giZm/k8-rolling-demo.git"
+  },
+  "author": "Pascal Cremer \"b00gizm@gmail.com\"",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/b00giZm/k8-rolling-demo/issues"
+  },
+  "homepage": "https://github.com/b00giZm/k8-rolling-demo#readme",
+  "devDependencies": {
+    "babel-core": "^6.8.0",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-react": "^6.5.0",
+    "jsx-loader": "^0.13.2",
+    "webpack": "^1.13.0"
+  }
+}
