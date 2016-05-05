@@ -2,6 +2,14 @@
 
 DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 
+# export common environment variables
 export PORT=8080
+export K8_NAMESPACE="k8-rolling-demo"
 
+# export custom environment variables if available
+if [[ -f "${DIR}/../.env" ]]; then
+    . ${DIR}/../.env
+fi
+
+# start web app
 ${DIR}/../../../bin/k8-rolling-demo
