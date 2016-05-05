@@ -6,6 +6,7 @@ import (
 	"k8-rolling-demo/lib/model"
 	"net/http"
 	"os"
+	"sync"
 )
 
 type HttpClient struct {
@@ -68,7 +69,57 @@ func (c *HttpClient) FetchServiceDetails(service string) (*model.Service, error)
 
 	svc := model.NewService(uid, name, labels, selectors)
 
+	podNames, err := c.fetchPodNamesForService(name)
+	if err != nil {
+		return nil, err
+	}
+
+	wg := &sync.WaitGroup{}
+	wg.Add(len(podNames))
+
+	for _, podName := range podNames {
+		go func(podName string, wg *sync.WaitGroup) {
+			pod, _ := c.FetchPodDetails(podName)
+			svc.AddPod(pod)
+
+			wg.Done()
+		}(podName, wg)
+	}
+
+	wg.Wait()
+
 	return svc, nil
+}
+
+func (c *HttpClient) fetchPodNamesForService(service string) ([]string, error) {
+	uri := fmt.Sprintf(
+		"http://%s:%s/api/v1/namespaces/%s/endpoints/%s",
+		c.host,
+		c.port,
+		c.namespace,
+		service,
+	)
+
+	resp, err := http.Get(uri)
+	if err != nil {
+		return nil, err
+	}
+
+	v, err := jason.NewObjectFromReader(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	subsets, _ := v.GetObjectArray("subsets")
+	addrs, _ := subsets[0].GetObjectArray("addresses")
+
+	podNames := make([]string, 0)
+	for _, addr := range addrs {
+		podName, _ := addr.GetString("targetRef", "name")
+		podNames = append(podNames, podName)
+	}
+
+	return podNames, nil
 }
 
 func (c *HttpClient) FetchPodDetails(pod string) (*model.Pod, error) {
@@ -113,8 +164,6 @@ func (c *HttpClient) FetchPodDetails(pod string) (*model.Pod, error) {
 		Status:    status,
 		Condition: firstCondition,
 	}
-
-	fmt.Println(pd)
 
 	return pd, nil
 }
