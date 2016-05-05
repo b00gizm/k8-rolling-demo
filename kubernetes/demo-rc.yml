@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: chefkoch-demo-v2
+  labels:
+    name: chefkoch-demo-v2
+    project: k8-rolling-demo
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        component: web
+        name: chefkoch-demo
+        release: v2
+    spec:
+      containers:
+        - name: chefkoch-demo
+          image: "b00gizm/chefkoch-demo:2"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - {containerPort: 80}
+          readinessProbe:
+            tcpSocket:
+              port: 80

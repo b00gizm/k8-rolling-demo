@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
+
+. ${DIR}/../../shell/helpers.sh
+
+# export common environment variables
+export NAMESPACE="k8-rolling-demo"
+
+# main
+
+if ! $(kubernetes-has-namespace ${NAMESPACE}); then
+    echo "[ERROR] Namespace ${NAMESPACE} not found. Please run \"bin/k8/init\""
+    exit 1;
+fi
+
+echo "[INFO] Rolling update for namespace ${NAMESPACE}"
+kubectl rolling-update \
+    --namespace=${NAMESPACE} \
+    --update-period="10s" \
+    chefkoch-demo-v1 \
+    -f ${DIR}/../../kubernetes/demo-rc.yml

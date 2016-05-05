@@ -50,8 +50,12 @@ function kubernetes-create-namespace {
 
 }
 
+function kubernetes-has-namespace {
+    kubectl get namespaces | grep -qs $1
+}
+
 function kubernetes-delete-namespace {
-    while (kubectl get namespaces | grep -qs $1); do
+    while (kubernetes-has-namespace $1); do
         kubectl delete namespace $1 &> /dev/null
         sleep 1
     done
