@@ -1,23 +1,23 @@
 package http
 
 import (
-	"os"
 	"fmt"
-	"net/http"
-	"k8-rolling-demo/lib/model"
 	"github.com/antonholmquist/jason"
+	"k8-rolling-demo/lib/model"
+	"net/http"
+	"os"
 )
 
-type HttpClient struct{
-	host string
-	port string
+type HttpClient struct {
+	host      string
+	port      string
 	namespace string
 }
 
 func NewHttpClient(host, port, namespace string) *HttpClient {
 	return &HttpClient{
-		host: host,
-		port: port,
+		host:      host,
+		port:      port,
 		namespace: namespace,
 	}
 }
@@ -66,13 +66,7 @@ func (c *HttpClient) FetchServiceDetails(service string) (*model.Service, error)
 		selectors[key] = str
 	}
 
-	svc := &model.Service{
-		Uid: uid,
-		Name: name,
-		Labels: labels,
-		Selectors: selectors,
-		Pods: make([]model.Pod, 0),
-	}
+	svc := model.NewService(uid, name, labels, selectors)
 
 	return svc, nil
 }
@@ -112,11 +106,11 @@ func (c *HttpClient) FetchPodDetails(pod string) (*model.Pod, error) {
 	firstCondition, _ := conditions[0].GetString("type")
 
 	pd := &model.Pod{
-		Uid: uid,
-		Name: name,
-		IpAddr: ipAddr,
-		Labels: labels,
-		Status: status,
+		Uid:       uid,
+		Name:      name,
+		IpAddr:    ipAddr,
+		Labels:    labels,
+		Status:    status,
 		Condition: firstCondition,
 	}
 
