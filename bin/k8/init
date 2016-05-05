@@ -2,12 +2,35 @@
 
 DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 
-. ${DIR}/../shell/helpers.sh
+. ${DIR}/../../shell/helpers.sh
 
-NAMESPACE="k8-rolling-demo"
+# export common environment variables
+export NAMESPACE="k8-rolling-demo"
+export MAX_DURATION=${MAX_DURATION:-60}
+
+# export custom environment variables if available
+if [[ -f "${DIR}/../../.env" ]]; then
+    . ${DIR}/../../.env
+fi
 
 # main
 
 echo "[INFO] Creating namespace ${NAMESPACE}"
 kubernetes-delete-namespace ${NAMESPACE}
 kubernetes-create-namespace ${NAMESPACE}
+
+echo "[INFO] Initial start"
+kubectl create --namespace=${NAMESPACE} -f ${DIR}/../../kubernetes/init.yml
+
+## wait for environment
+kubernetes-wait ${NAMESPACE} ${MAX_DURATION}
+
+## ready to go!
+echo ">> RUNNING!"
+echo ">>"
+echo ">> kubectl get po --namespace=${NAMESPACE}"
+echo ">> kubectl get rc --namespace=${NAMESPACE}"
+echo ">> kubectl get svc --namespace=${NAMESPACE}"
+echo ">>"
+echo ">> CALL:"
+echo ">> http://${K8_NODE_PORT_HOST}"
