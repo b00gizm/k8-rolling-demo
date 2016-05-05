@@ -1,0 +1,4 @@
+package: .
+import:
+- package: github.com/gin-gonic/gin
+- package: github.com/golang/protobuf
