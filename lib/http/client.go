@@ -1,6 +1,7 @@
 package http
 
 import (
+	"errors"
 	"fmt"
 	"github.com/antonholmquist/jason"
 	"k8-rolling-demo/lib/model"
@@ -43,6 +44,10 @@ func (c *HttpClient) FetchServiceDetails(service string) (*model.Service, error)
 	resp, err := http.Get(uri)
 	if err != nil {
 		return nil, err
+	}
+
+	if resp.StatusCode >= 400 {
+		return nil, errors.New(resp.Status)
 	}
 
 	v, err := jason.NewObjectFromReader(resp.Body)
@@ -111,6 +116,10 @@ func (c *HttpClient) fetchPodNamesForService(service string) ([]string, error) {
 	}
 
 	subsets, _ := v.GetObjectArray("subsets")
+	if len(subsets) <= 0 {
+		return nil, errors.New("No pods available in service")
+	}
+
 	addrs, _ := subsets[0].GetObjectArray("addresses")
 
 	podNames := make([]string, 0)
