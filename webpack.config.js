@@ -1,6 +1,7 @@
 var path              = require('path');
 var webpack           = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var PATHS = {
     build : path.resolve(__dirname, 'public'),
@@ -47,6 +48,9 @@ module.exports = {
     },
 
     plugins: [
+        new CopyWebpackPlugin([
+            { from: './node_modules/animate.css/animate.min.css' }
+        ]),
         new webpack.DefinePlugin({
             '__BASE_URL__' : JSON.stringify(process.env['K8_NODE_PORT_HOST'])
         }),

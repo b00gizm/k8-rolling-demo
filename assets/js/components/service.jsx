@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import sortBy from 'lodash.sortby';
 
 import Pod from './pod.jsx';
@@ -16,7 +17,21 @@ const Service = (props) => {
     return (
         <div className="service">
             <div className="pods-container">
-                {pods.map(pod => <Pod {...pod} key={pod.uid} />)}
+                <ReactCSSTransitionGroup
+                    transitionName={ {
+                        enter: 'bounceIn',
+                        enterActive: 'bounceIn',
+                        leave: 'bounceOut',
+                        leaveActive: 'bounceOut',
+                        appear: 'bounceIn',
+                        appearActive: 'bounceIn'
+                    } }
+                    transitionAppear={true}
+                    transitionAppearTimeout={1000}
+                    transitionEnterTimeout={1000}
+                    transitionLeaveTimeout={1000}>
+                    {pods.map(pod => <Pod {...pod} key={pod.uid} />)}
+                </ReactCSSTransitionGroup>
             </div>
         </div>
     );

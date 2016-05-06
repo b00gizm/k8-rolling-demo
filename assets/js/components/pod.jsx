@@ -8,6 +8,7 @@ const Pod = (props) => {
         pod: true,
         [props.labels.release]: true,
         term: props.status === 'Terminating',
+        animated: true,
     });
 
     const openApp = () => {

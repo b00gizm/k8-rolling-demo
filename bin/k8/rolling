@@ -17,6 +17,6 @@ fi
 echo "[INFO] Rolling update for namespace ${NAMESPACE}"
 kubectl rolling-update \
     --namespace=${NAMESPACE} \
-    --update-period="3s" \
+    --update-period="500ms" \
     chefkoch-demo-v1 \
     -f ${DIR}/../../kubernetes/demo-rc.yml

@@ -73,6 +73,7 @@ The following awesome open source frameworks and libraries were used in this pro
 
 ### Frontend
 
+* [Animate.css](http://daneden.github.io/animate.css/)
 * [React](https://facebook.github.io/react/)
 
 ## Maintainer
