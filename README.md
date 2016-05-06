@@ -8,15 +8,72 @@ Companion demo for my talk at [Bonn Agile goes Docker Cluster](http://www.meetup
 * Kubernetes
 * Go >= 1.5
 * [Glide](https://glide.sh/)
+* Node.js >= 5.6
 
-## Install
+## Installing
+
+Clone the repository:
 
 ```bash
 $ cd $GOPATH/src
 $ git clone https://github.com/b00giZm/k8-rolling-demo.git
 $ cd k8-rolling-demo
+```
+
+Copy `.env.example` to `.env` and customize it to your needs
+
+```bash
+$ cp .env.example .env
+$ vim .env
+```
+
+Install Go dependencies:
+
+```bash
 $ glide install
 ```
+
+Install frontend dependencies:
+
+```bash
+$ npm install
+```
+
+Build frontend assets:
+
+```bash
+$ npm run build
+```
+
+## Running
+
+Run the initial Kubernetes config:
+
+```bash
+$ bin/k8/init
+```
+
+Start the web server:
+
+```bash
+$ bin/start
+```
+
+and navigate to [http://localhost:8080](http://localhost:8080) in your browser.
+
+## Open Source
+
+The following awesome open source frameworks and libraries were used in this project.
+
+### Backend
+
+* [Gin](https://gin-gonic.github.io/gin/)
+* [Gorilla Websocket](https://github.com/gorilla/websocket)
+* [Jason](https://github.com/antonholmquist/jason)
+
+### Frontend
+
+* [React](https://facebook.github.io/react/)
 
 ## Maintainer
 
