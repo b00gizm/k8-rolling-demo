@@ -19,7 +19,8 @@ func init() {
 	}
 
 	// static files
-	router.Static("/public", "./public")
+	router.Static("/assets", "./public")
+	router.Static("/img", "./resources")
 
 	// main html
 	router.LoadHTMLGlob("templates/*")

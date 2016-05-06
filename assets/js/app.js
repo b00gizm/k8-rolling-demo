@@ -1,12 +1,26 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import Service from './components/service.jsx';
+
+require('../scss/main.scss');
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const conn = new WebSocket('ws://localhost:8080/ws/service');
     conn.onopen = () => {
         conn.send('ready');
-    }
+    };
 
     conn.onmessage = (msg) => {
-        console.log(JSON.parse(msg.data));
+        render(JSON.parse(msg.data));
     };
+
+    const render = (json) => {
+        ReactDOM.render(
+            <Service {...json} />,
+            document.getElementById('root')
+        );
+    }
 
 });

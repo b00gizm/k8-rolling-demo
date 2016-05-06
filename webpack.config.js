@@ -1,5 +1,6 @@
-var path    = require('path');
-var webpack = require('webpack');
+var path              = require('path');
+var webpack           = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var PATHS = {
     build : path.resolve(__dirname, 'public'),
@@ -9,7 +10,7 @@ var PATHS = {
 module.exports = {
     entry: {
         main: [ PATHS.main ],
-        vendor: [],
+        vendor: ['react', 'react-dom'],
     },
 
     output: {
@@ -36,6 +37,21 @@ module.exports = {
             query: {
                 presets: ["es2015", "react"]
             }
+        }, {
+            test:   /\.scss$/,
+            loader: ExtractTextPlugin.extract('css!sass')
+        }, {
+            test:   /\.css$/,
+            loader: ExtractTextPlugin.extract('css')
         }]
     },
+
+    plugins: [
+        new webpack.DefinePlugin({
+            '__BASE_URL__' : JSON.stringify(process.env['K8_NODE_PORT_HOST'])
+        }),
+        new ExtractTextPlugin('[name].css', {
+            allChunks: true
+        }),
+    ]
 };

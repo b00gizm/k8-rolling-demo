@@ -1,0 +1,65 @@
+.pods-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.pod {
+  width: 220px;
+  color: $ck-green;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .avatar {
+    width: 180px;
+    height: 180px;
+    border-radius: 105px;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.5);
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.pod.term {
+  color: $ck-green-light;
+}
+
+.pod.v1 {
+  .avatar {
+    border: 5px solid $ck-green;
+    background-color: white;
+    background-image: url(/img/ck-logo-v1.svg);
+  }
+}
+
+.pod.v1.term {
+  .avatar {
+    border: 5px solid $ck-green-light;
+    background-image: url(/img/ck-logo-v1-term.svg);
+  }
+}
+
+.pod.v2 {
+  .avatar {
+    border: 5px solid white;
+    background-color: $ck-green;
+    background-image: url(/img/ck-logo-v2.svg);
+  }
+}
+
+.pod.v2.term {
+  .avatar {
+    border: 5px solid white;
+    background-color: $ck-green;
+    background-image: url(/img/ck-logo-v2.svg);
+  }
+}

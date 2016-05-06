@@ -1,0 +1,10 @@
+@import "variables";
+
+@import "pods";
+
+body {
+  font-family: $font-stack;
+  font-size: 14px;
+  padding: 0;
+  background-color: $bg-color;
+}
