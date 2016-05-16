@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import sortBy from 'lodash.sortby';
+import { format } from '../utils';
 
 import Pod from './pod.jsx';
 
@@ -16,6 +17,7 @@ const Service = (props) => {
 
     return (
         <div className="service">
+            <header><span className="hint--rounded hint--top" data-hint={format(props.selectors)}>Service: {props.name}</span></header>
             <div className="pods-container">
                 <ReactCSSTransitionGroup
                     transitionName={ {

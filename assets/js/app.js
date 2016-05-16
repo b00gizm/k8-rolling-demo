@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import Service from './components/service.jsx';
 
+require('hint.css/hint.css');
 require('../scss/main.scss');
 
 document.addEventListener('DOMContentLoaded', () => {

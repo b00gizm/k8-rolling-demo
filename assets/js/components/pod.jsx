@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-
+import { format } from '../utils';
 import { BASE_URL } from '../constants';
 
 const Pod = (props) => {
@@ -18,7 +18,7 @@ const Pod = (props) => {
     return (
         <div className={classes} onClick={openApp}>
             <div className="avatar"></div>
-            <h3>{props.name}</h3>
+            <h3><span className="hint--rounded hint--bottom" data-hint={format(props.labels)}>{props.name}</span></h3>
         </div>
     );
 };
