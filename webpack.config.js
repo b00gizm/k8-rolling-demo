@@ -48,9 +48,6 @@ module.exports = {
     },
 
     plugins: [
-        new CopyWebpackPlugin([
-            { from: './node_modules/animate.css/animate.min.css' }
-        ]),
         new webpack.DefinePlugin({
             '__BASE_URL__' : JSON.stringify(process.env['K8_NODE_PORT_HOST'])
         }),
