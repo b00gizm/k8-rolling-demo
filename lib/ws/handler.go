@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-const serviceName string = "chefkoch-demo-np"
+const serviceName string = "chefkoch-demo"
 
 func WsHandler(w http.ResponseWriter, r *http.Request) {
 	wsupgrader := websocket.Upgrader{
