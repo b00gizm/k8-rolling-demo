@@ -61,6 +61,18 @@ $ bin/start
 
 and navigate to [http://localhost:8080](http://localhost:8080) in your browser.
 
+You can then run the following two demos:
+
+* Rolling Update
+* Canary Deployment
+
+```bash
+$ bin/k8/rolling
+$ bin/k8/canary
+```
+
+All changes while running both demos can be seen in real time.
+
 ## Open Source
 
 The following awesome open source frameworks and libraries were used in this project.
@@ -76,6 +88,7 @@ The following awesome open source frameworks and libraries were used in this pro
 * [Animate.css](http://daneden.github.io/animate.css/)
 * [Hint.css](http://kushagragour.in/lab/hint/)
 * [React](https://facebook.github.io/react/)
+* [Webpack](https://webpack.github.io/)
 
 ## Maintainer
 
